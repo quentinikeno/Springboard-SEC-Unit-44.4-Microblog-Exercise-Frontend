@@ -67,10 +67,14 @@ const NewPostForm = ({ addPost }) => {
 			</div>
 			<div className="field is-grouped">
 				<div className="control">
-					<button className="button is-link">Save</button>
+					<button type="submit" className="button is-link">
+						Save
+					</button>
 				</div>
 				<div className="control">
-					<button className="button is-link is-light">Cancel</button>
+					<Link to="/" className="button is-link is-light">
+						Cancel
+					</Link>
 				</div>
 			</div>
 		</form>
