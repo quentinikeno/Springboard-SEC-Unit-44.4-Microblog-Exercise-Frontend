@@ -20,7 +20,7 @@ const NewPostForm = ({ addPost }) => {
 	};
 
 	return (
-		<form onSubmit={handleSubmit}>
+		<form onSubmit={handleSubmit} className="my-5">
 			<div className="field">
 				<label htmlFor="title" className="label">
 					Title
