@@ -33,6 +33,7 @@ const NewPostForm = ({ addPost }) => {
 						id="title"
 						name="title"
 						value={formData.title}
+						required
 					/>
 				</div>
 			</div>
@@ -48,6 +49,7 @@ const NewPostForm = ({ addPost }) => {
 						id="description"
 						name="description"
 						value={formData.description}
+						required
 					/>
 				</div>
 			</div>
@@ -62,6 +64,7 @@ const NewPostForm = ({ addPost }) => {
 						id="body"
 						name="body"
 						value={formData.body}
+						required
 					/>
 				</div>
 			</div>
