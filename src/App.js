@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Header from "./Header";
 import NewPostForm from "./posts/NewPostForm";
+import FindPost from "./posts/detail/FindPost";
 
 function App() {
 	const [posts, setPosts] = useState([]);
@@ -16,6 +17,7 @@ function App() {
 					path="/new"
 					element={<NewPostForm addPost={addPost} />}
 				/>
+				<Route path="/:postId" element={<FindPost posts={posts} />} />
 			</Routes>
 		</div>
 	);
