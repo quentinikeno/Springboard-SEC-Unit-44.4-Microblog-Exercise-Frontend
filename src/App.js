@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
+import Homepage from "./Homepage";
 import Header from "./Header";
 import NewPostForm from "./posts/NewPostForm";
 import FindPost from "./posts/detail/FindPost";
@@ -10,9 +11,10 @@ function App() {
 		setPosts([...posts, newPost]);
 	};
 	return (
-		<div className="App">
+		<div className="App container">
 			<Header />
 			<Routes>
+				<Route path="/" element={<Homepage posts={posts} />} />
 				<Route
 					path="/new"
 					element={<NewPostForm addPost={addPost} />}
