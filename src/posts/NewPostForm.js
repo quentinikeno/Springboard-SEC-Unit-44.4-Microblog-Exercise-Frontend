@@ -1,17 +1,12 @@
-import { useState } from "react";
+import useFormState from "../hooks/useFormState";
 import { Link, useNavigate } from "react-router-dom";
 import { v4 as uuid } from "uuid";
 
 const NewPostForm = ({ addPost }) => {
-	const initalState = { title: "", description: "", body: "" };
-	const [formData, setFormData] = useState(initalState);
+	const initialState = { title: "", description: "", body: "" };
+	const [formData, setFormData, handleChange] = useFormState(initialState);
 
 	const navigate = useNavigate();
-
-	const handleChange = (event) => {
-		const { name, value } = event.target;
-		setFormData((formData) => ({ ...formData, [name]: value }));
-	};
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
