@@ -9,7 +9,9 @@ const Header = () => {
 					Get started blogging on this lightweight platform.
 				</p>
 				<div>
-					<Link to="/">Blog</Link>
+					<Link to="/" className="mr-3">
+						Blog
+					</Link>
 					<Link to="/new">Add a new post</Link>
 				</div>
 			</div>
