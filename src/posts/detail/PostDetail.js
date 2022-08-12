@@ -1,5 +1,23 @@
+import { useState } from "react";
+import EditPostForm from "../EditPostForm";
+
 const PostDetail = ({ post, editPost, deletePost }) => {
+	const [isEditing, setIsEditing] = useState(false);
+	const toggleIsEditing = () => {
+		setIsEditing((isEditing) => !isEditing);
+	};
+
 	const { id, title, description, body } = post;
+
+	if (isEditing)
+		return (
+			<EditPostForm
+				post={post}
+				editPost={editPost}
+				toggleIsEditing={toggleIsEditing}
+			/>
+		);
+
 	return (
 		<section className="section">
 			<div className="is-flex is-justify-content-space-between">
@@ -8,7 +26,10 @@ const PostDetail = ({ post, editPost, deletePost }) => {
 					<p className="subtitle is-4">{description}</p>
 				</div>
 				<div>
-					<button className="button is-info mr-3">
+					<button
+						className="button is-info mr-3"
+						onClick={toggleIsEditing}
+					>
 						Edit <i className="fa-solid fa-pen-to-square ml-3"></i>
 					</button>
 					<button className="button is-danger">

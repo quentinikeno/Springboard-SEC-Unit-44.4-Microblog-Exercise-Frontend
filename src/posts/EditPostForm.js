@@ -1,7 +1,7 @@
 import useFormState from "../hooks/useFormState";
 import { Link, useNavigate } from "react-router-dom";
 
-const EditPostForm = ({ post }) => {
+const EditPostForm = ({ post, editPost }) => {
 	const initialState = post;
 	const [formData, setFormData, handleChange] = useFormState(initialState);
 
@@ -9,8 +9,8 @@ const EditPostForm = ({ post }) => {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		addPost({ ...formData, id: uuid() });
-		navigate("/");
+		editPost(formData);
+		navigate(`/${post.id}`);
 	};
 
 	return (
