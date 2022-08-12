@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import EditPostForm from "../EditPostForm";
 
 const PostDetail = ({ post, editPost, deletePost }) => {
@@ -7,6 +8,7 @@ const PostDetail = ({ post, editPost, deletePost }) => {
 		setIsEditing((isEditing) => !isEditing);
 	};
 
+	const navigate = useNavigate();
 	const { id, title, description, body } = post;
 
 	if (isEditing)
@@ -17,6 +19,11 @@ const PostDetail = ({ post, editPost, deletePost }) => {
 				toggleIsEditing={toggleIsEditing}
 			/>
 		);
+
+	const handleDelete = () => {
+		deletePost(id);
+		navigate("/");
+	};
 
 	return (
 		<section className="section">
@@ -32,7 +39,7 @@ const PostDetail = ({ post, editPost, deletePost }) => {
 					>
 						Edit <i className="fa-solid fa-pen-to-square ml-3"></i>
 					</button>
-					<button className="button is-danger">
+					<button className="button is-danger" onClick={handleDelete}>
 						Delete <i className="fa-solid fa-trash ml-3"></i>
 					</button>
 				</div>
