@@ -1,4 +1,4 @@
-const PostDetail = ({ post }) => {
+const PostDetail = ({ post, editPost, deletePost }) => {
 	const { id, title, description, body } = post;
 	return (
 		<section className="section">
