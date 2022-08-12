@@ -1,16 +1,18 @@
 import useFormState from "../hooks/useFormState";
-import { Link, useNavigate } from "react-router-dom";
 
-const EditPostForm = ({ post, editPost }) => {
+const EditPostForm = ({ post, editPost, toggleIsEditing }) => {
 	const initialState = post;
 	const [formData, setFormData, handleChange] = useFormState(initialState);
-
-	const navigate = useNavigate();
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		editPost(formData);
-		navigate(`/${post.id}`);
+		toggleIsEditing();
+	};
+
+	const handleCancel = (event) => {
+		event.preventDefault();
+		toggleIsEditing();
 	};
 
 	return (
@@ -69,9 +71,12 @@ const EditPostForm = ({ post, editPost }) => {
 					</button>
 				</div>
 				<div className="control">
-					<Link to="/" className="button is-link is-light">
+					<button
+						className="button is-link is-light"
+						onClick={handleCancel}
+					>
 						Cancel
-					</Link>
+					</button>
 				</div>
 			</div>
 		</form>
