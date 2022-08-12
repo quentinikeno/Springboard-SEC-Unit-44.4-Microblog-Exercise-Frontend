@@ -12,10 +12,18 @@ function App() {
 			posts.map((post) => (post.id === editedPost.id ? editedPost : post))
 		);
 	};
+	const deletePost = (id) => {
+		setPosts((posts) => [...posts].filter((post) => post.id !== id));
+	};
 	return (
 		<div className="App container">
 			<Header />
-			<AppRoutes posts={posts} addPost={addPost} editPost={editPost} />
+			<AppRoutes
+				posts={posts}
+				addPost={addPost}
+				editPost={editPost}
+				deletePost={deletePost}
+			/>
 		</div>
 	);
 }
