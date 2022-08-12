@@ -2,7 +2,7 @@ import useFormState from "../hooks/useFormState";
 
 const EditPostForm = ({ post, editPost, toggleIsEditing }) => {
 	const initialState = post;
-	const [formData, setFormData, handleChange] = useFormState(initialState);
+	const [formData, handleChange] = useFormState(initialState);
 
 	const handleSubmit = (event) => {
 		event.preventDefault();

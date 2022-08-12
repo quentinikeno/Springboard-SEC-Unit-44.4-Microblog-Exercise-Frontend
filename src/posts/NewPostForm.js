@@ -4,7 +4,7 @@ import { v4 as uuid } from "uuid";
 
 const NewPostForm = ({ addPost }) => {
 	const initialState = { title: "", description: "", body: "" };
-	const [formData, setFormData, handleChange] = useFormState(initialState);
+	const [formData, handleChange] = useFormState(initialState);
 
 	const navigate = useNavigate();
 
