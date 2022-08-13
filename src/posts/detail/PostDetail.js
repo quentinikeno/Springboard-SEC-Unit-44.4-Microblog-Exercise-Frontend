@@ -1,8 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import useToggleState from "../../hooks/useToggleState";
 import EditPostForm from "../EditPostForm";
+import CommentsSection from "../comments/CommentsSection";
 
-const PostDetail = ({ post, editPost, deletePost }) => {
+const PostDetail = ({
+	post,
+	editPost,
+	deletePost,
+	comments,
+	addComment,
+	deleteComment,
+}) => {
 	const [isEditing, toggleIsEditing] = useToggleState(false);
 
 	const navigate = useNavigate();
@@ -44,6 +52,13 @@ const PostDetail = ({ post, editPost, deletePost }) => {
 			<div className="my-3">
 				<p>{body}</p>
 			</div>
+			<hr />
+			<CommentsSection
+				comments={comments}
+				addComment={addComment}
+				deleteComment={deleteComment}
+				postId={post.id}
+			/>
 		</section>
 	);
 };
