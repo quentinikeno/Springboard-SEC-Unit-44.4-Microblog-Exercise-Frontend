@@ -8,7 +8,7 @@ const useFormState = (initialState) => {
 		setFormData((formData) => ({ ...formData, [name]: value }));
 	};
 
-	return [formData, handleChange];
+	return [formData, handleChange, setFormData];
 };
 
 export default useFormState;
