@@ -4,6 +4,9 @@ import AppRoutes from "./routes/AppRoutes";
 
 function App() {
 	const [posts, setPosts] = useState([]);
+	const [postComments, setPostComments] = useState({});
+	// {postId: {commentId: text, ...}}
+
 	const addPost = (newPost) => {
 		setPosts((posts) => [...posts, newPost]);
 	};
@@ -15,6 +18,31 @@ function App() {
 	const deletePost = (id) => {
 		setPosts((posts) => [...posts].filter((post) => post.id !== id));
 	};
+
+	const initComment = (postId) => {
+		setPostComments((postComments) => ({ ...postComments, [postId]: {} }));
+	};
+	const addComment = (postId, commentId, text) => {
+		setPostComments((postComments) => {
+			const comments = { ...postComments[postId] };
+			const newPostComments = {
+				...postComments,
+				[postId]: { ...comments, [commentId]: text },
+			};
+			return newPostComments;
+		});
+	};
+	const deleteComment = (postId, commentId) => {
+		setPostComments((postComments) => {
+			const comments = { ...postComments[postId] };
+			delete comments[commentId];
+			const newPostComments = {
+				...postComments,
+				[postId]: comments,
+			};
+			return newPostComments;
+		});
+	};
 	return (
 		<div className="App container">
 			<Header />
@@ -23,6 +51,10 @@ function App() {
 				addPost={addPost}
 				editPost={editPost}
 				deletePost={deletePost}
+				postComments={postComments}
+				initComment={initComment}
+				addComment={addComment}
+				deleteComment={deleteComment}
 			/>
 		</div>
 	);
