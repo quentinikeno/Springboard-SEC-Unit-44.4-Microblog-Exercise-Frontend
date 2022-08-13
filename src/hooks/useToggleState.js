@@ -3,7 +3,7 @@ import { useState } from "react";
 const useToggleState = () => {
 	const [isToggled, setToggled] = useState(false);
 	const toggle = () => {
-		setIsEditing((isEditing) => !isEditing);
+		setToggled((isToggled) => !isToggled);
 	};
 	return [isToggled, toggle];
 };
