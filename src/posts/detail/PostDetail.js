@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useToggleState } from ".../hooks/useFormState";
+import useToggleState from "../../hooks/useToggleState";
 import EditPostForm from "../EditPostForm";
 
 const PostDetail = ({ post, editPost, deletePost }) => {
