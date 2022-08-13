@@ -2,7 +2,7 @@ import useFormState from "../hooks/useFormState";
 import { Link, useNavigate } from "react-router-dom";
 import { v4 as uuid } from "uuid";
 
-const NewPostForm = ({ addPost }) => {
+const NewPostForm = ({ addPost, initComment }) => {
 	const initialState = { title: "", description: "", body: "" };
 	const [formData, handleChange] = useFormState(initialState);
 
@@ -10,7 +10,9 @@ const NewPostForm = ({ addPost }) => {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		addPost({ ...formData, id: uuid() });
+		const id = uuid();
+		addPost({ ...formData, id });
+		initComment(id);
 		navigate("/");
 	};
 
