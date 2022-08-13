@@ -1,12 +1,9 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useToggleState } from ".../hooks/useFormState";
 import EditPostForm from "../EditPostForm";
 
 const PostDetail = ({ post, editPost, deletePost }) => {
-	const [isEditing, setIsEditing] = useState(false);
-	const toggleIsEditing = () => {
-		setIsEditing((isEditing) => !isEditing);
-	};
+	const [isEditing, toggleIsEditing] = useToggleState(false);
 
 	const navigate = useNavigate();
 	const { id, title, description, body } = post;
