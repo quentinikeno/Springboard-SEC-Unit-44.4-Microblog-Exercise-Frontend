@@ -1,19 +1,22 @@
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { deletePost } from "../../store/postsSlice";
 import CommentsSection from "../comments/CommentsSection";
 
 const PostContent = ({
-	post,
-	deletePost,
+	id,
 	comments,
 	addComment,
 	deleteComment,
 	toggleIsEditing,
 }) => {
+	const post = useSelector((state) => state.posts.postId);
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const { id, title, description, body } = post;
+	const { title, description, body } = post;
 
 	const handleDelete = () => {
-		deletePost(id);
+		dispatch(deletePost(id));
 		navigate("/");
 	};
 	return (
