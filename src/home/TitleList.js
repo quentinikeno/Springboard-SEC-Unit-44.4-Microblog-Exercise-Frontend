@@ -3,7 +3,7 @@ import Title from "./Title";
 
 const TitleList = () => {
 	const posts = useSelector((state) => state.posts);
-	const postIds = Object.key(posts);
+	const postIds = Object.keys(posts);
 
 	if (postIds.length === 0) return <p>No posts to display yet!</p>;
 
