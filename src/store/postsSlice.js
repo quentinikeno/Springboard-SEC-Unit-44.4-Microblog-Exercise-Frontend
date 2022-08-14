@@ -19,9 +19,8 @@ export const postsSlice = createSlice({
 			return posts;
 		},
 		deletePost: (state, action) => {
-			const { id } = action.payload;
 			const posts = { ...state };
-			delete posts[id];
+			delete posts[action.payload];
 			return posts;
 		},
 	},
