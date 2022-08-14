@@ -5,9 +5,7 @@ import CommentsSection from "../comments/CommentsSection";
 
 const PostContent = ({
 	postId,
-	comments,
-	addComment,
-	deleteComment,
+
 	toggleIsEditing,
 }) => {
 	const post = useSelector((state) => state.posts[postId]);
@@ -43,12 +41,7 @@ const PostContent = ({
 				<p>{body}</p>
 			</div>
 			<hr />
-			<CommentsSection
-				comments={comments}
-				addComment={addComment}
-				deleteComment={deleteComment}
-				postId={postId}
-			/>
+			<CommentsSection postId={postId} />
 		</section>
 	);
 };
