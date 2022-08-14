@@ -2,22 +2,12 @@ import { useParams, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import PostDetail from "./PostDetail";
 
-const FindPost = ({ postComments, addComment, deleteComment }) => {
+const FindPost = () => {
 	const { postId } = useParams();
 	const posts = useSelector((state) => state.posts);
 	const foundPost = Object.keys(posts).find((id) => id === postId);
-	const foundComments = postComments[postId];
 
-	return foundPost ? (
-		<PostDetail
-			postId={postId}
-			comments={foundComments}
-			addComment={addComment}
-			deleteComment={deleteComment}
-		/>
-	) : (
-		<Navigate to="/" />
-	);
+	return foundPost ? <PostDetail postId={postId} /> : <Navigate to="/" />;
 };
 
 export default FindPost;
