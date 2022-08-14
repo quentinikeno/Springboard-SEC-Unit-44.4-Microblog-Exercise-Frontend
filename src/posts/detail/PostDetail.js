@@ -13,7 +13,6 @@ const PostDetail = ({ id, comments, addComment, deleteComment }) => {
 			comments={comments}
 			addComment={addComment}
 			deleteComment={deleteComment}
-			deletePost={deletePost}
 			toggleIsEditing={toggleIsEditing}
 		/>
 	);
