@@ -14,7 +14,7 @@ const NewPostForm = ({ initComment }) => {
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		const id = uuid();
-		dispatch(addPost(formData));
+		dispatch(addPost({ ...formData, id }));
 		initComment(id);
 		navigate("/");
 	};

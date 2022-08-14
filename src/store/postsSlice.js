@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { v4 as uuid } from "uuid";
 
 // {postId: {title, description, body}, ...}
 const initialState = {};
@@ -9,8 +8,8 @@ export const postsSlice = createSlice({
 	initialState,
 	reducers: {
 		addPost: (state, action) => {
-			const id = uuid();
-			return { ...state, [id]: action.payload };
+			const { id, title, description, body } = action.payload;
+			return { ...state, [id]: { title, description, body } };
 		},
 
 		editPost: (state, action) => {
