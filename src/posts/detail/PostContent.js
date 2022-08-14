@@ -3,11 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { deletePost } from "../../store/postsSlice";
 import CommentsSection from "../comments/CommentsSection";
 
-const PostContent = ({
-	postId,
-
-	toggleIsEditing,
-}) => {
+const PostContent = ({ postId, toggleIsEditing }) => {
 	const post = useSelector((state) => state.posts[postId]);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
