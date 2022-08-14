@@ -9,19 +9,15 @@ export const postsSlice = createSlice({
 	reducers: {
 		addPost: (state, action) => {
 			const { id, title, description, body } = action.payload;
-			return { ...state, [id]: { title, description, body } };
+			state[id] = { title, description, body };
 		},
 
 		editPost: (state, action) => {
 			const { id, title, description, body } = action.payload;
-			const posts = { ...state };
-			posts[id] = { title, description, body };
-			return posts;
+			state[id] = { title, description, body };
 		},
 		deletePost: (state, action) => {
-			const posts = { ...state };
-			delete posts[action.payload];
-			return posts;
+			delete state[action.payload];
 		},
 	},
 });
