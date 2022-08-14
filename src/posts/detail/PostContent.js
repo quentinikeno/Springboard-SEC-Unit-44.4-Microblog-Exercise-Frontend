@@ -4,19 +4,19 @@ import { deletePost } from "../../store/postsSlice";
 import CommentsSection from "../comments/CommentsSection";
 
 const PostContent = ({
-	id,
+	postId,
 	comments,
 	addComment,
 	deleteComment,
 	toggleIsEditing,
 }) => {
-	const post = useSelector((state) => state.posts.postId);
+	const post = useSelector((state) => state.posts[postId]);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { title, description, body } = post;
 
 	const handleDelete = () => {
-		dispatch(deletePost(id));
+		dispatch(deletePost(postId));
 		navigate("/");
 	};
 	return (
@@ -46,7 +46,7 @@ const PostContent = ({
 				comments={comments}
 				addComment={addComment}
 				deleteComment={deleteComment}
-				postId={id}
+				postId={postId}
 			/>
 		</section>
 	);

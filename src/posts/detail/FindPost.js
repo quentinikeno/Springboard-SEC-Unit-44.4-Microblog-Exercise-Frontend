@@ -10,7 +10,7 @@ const FindPost = ({ postComments, addComment, deleteComment }) => {
 
 	return foundPost ? (
 		<PostDetail
-			id={postId}
+			postId={postId}
 			comments={foundComments}
 			addComment={addComment}
 			deleteComment={deleteComment}
