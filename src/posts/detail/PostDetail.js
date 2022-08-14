@@ -2,13 +2,14 @@ import useToggleState from "../../hooks/useToggleState";
 import PostContent from "./PostContent";
 import EditPostForm from "../EditPostForm";
 
-const PostDetail = ({ comments, addComment, deleteComment }) => {
+const PostDetail = ({ id, comments, addComment, deleteComment }) => {
 	const [isEditing, toggleIsEditing] = useToggleState(false);
 
 	if (isEditing) return <EditPostForm toggleIsEditing={toggleIsEditing} />;
 
 	return (
 		<PostContent
+			id={id}
 			comments={comments}
 			addComment={addComment}
 			deleteComment={deleteComment}
