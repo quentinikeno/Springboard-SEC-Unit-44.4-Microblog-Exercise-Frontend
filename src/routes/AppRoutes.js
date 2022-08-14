@@ -3,29 +3,12 @@ import Homepage from "../home/Homepage";
 import NewPostForm from "../posts/NewPostForm";
 import FindPost from "../posts/detail/FindPost";
 
-const AppRoutes = ({
-	postComments,
-	initComment,
-	addComment,
-	deleteComment,
-}) => {
+const AppRoutes = () => {
 	return (
 		<Routes>
 			<Route path="/" element={<Homepage />} />
-			<Route
-				path="/new"
-				element={<NewPostForm initComment={initComment} />}
-			/>
-			<Route
-				path="/:postId"
-				element={
-					<FindPost
-						addComment={addComment}
-						deleteComment={deleteComment}
-						postComments={postComments}
-					/>
-				}
-			/>
+			<Route path="/new" element={<NewPostForm />} />
+			<Route path="/:postId" element={<FindPost />} />
 		</Routes>
 	);
 };
