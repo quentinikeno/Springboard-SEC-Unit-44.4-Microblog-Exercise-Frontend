@@ -4,8 +4,7 @@ import PostDetail from "./PostDetail";
 
 const FindPost = () => {
 	const { postId } = useParams();
-	const posts = useSelector((state) => state.posts);
-	const foundPost = Object.keys(posts).find((id) => id === postId);
+	const foundPost = useSelector((state) => state.posts[postId]) || null;
 
 	return foundPost ? <PostDetail postId={postId} /> : <Navigate to="/" />;
 };
