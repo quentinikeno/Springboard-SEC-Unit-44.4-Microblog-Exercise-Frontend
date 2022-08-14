@@ -5,7 +5,10 @@ import EditPostForm from "../EditPostForm";
 const PostDetail = ({ postId, comments, addComment, deleteComment }) => {
 	const [isEditing, toggleIsEditing] = useToggleState(false);
 
-	if (isEditing) return <EditPostForm toggleIsEditing={toggleIsEditing} />;
+	if (isEditing)
+		return (
+			<EditPostForm postId={postId} toggleIsEditing={toggleIsEditing} />
+		);
 
 	return (
 		<PostContent
