@@ -19,6 +19,7 @@ const PostContent = ({
 		dispatch(deletePost(postId));
 		navigate("/");
 	};
+
 	return (
 		<section className="section">
 			<div className="is-flex is-justify-content-space-between">
