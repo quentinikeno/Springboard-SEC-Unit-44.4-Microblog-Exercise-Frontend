@@ -3,9 +3,8 @@ import { editPost } from "../store/postsSlice";
 import useFormState from "../hooks/useFormState";
 
 const EditPostForm = ({ postId, toggleIsEditing }) => {
-	const initialState = post;
-	const [formData, handleChange] = useFormState(initialState);
 	const post = useSelector((state) => state.posts[postId]);
+	const [formData, handleChange] = useFormState(post);
 	const dispatch = useDispatch();
 
 	const handleSubmit = (event) => {
