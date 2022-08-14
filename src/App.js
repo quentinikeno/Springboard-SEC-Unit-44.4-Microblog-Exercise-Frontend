@@ -1,6 +1,8 @@
 import Header from "./Header";
 import AppRoutes from "./routes/AppRoutes";
 
+import { useState } from "react";
+
 function App() {
 	const [postComments, setPostComments] = useState({});
 
