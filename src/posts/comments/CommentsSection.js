@@ -14,7 +14,11 @@ const CommentsSection = ({ comments, addComment, deleteComment, postId }) => {
 	return (
 		<div>
 			<h4 className="title is-4">Comments</h4>
-			<div>{commentComponents}</div>
+			{commentComponents.length > 0 ? (
+				<div>{commentComponents}</div>
+			) : (
+				<p>No comments yet...</p>
+			)}
 			<div>
 				<NewCommentForm
 					addComment={addComment}
