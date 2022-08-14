@@ -1,17 +1,20 @@
-import useFormState from "../hooks/useFormState";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { v4 as uuid } from "uuid";
+import { addPost } from "../store/postsSlice";
+import useFormState from "../hooks/useFormState";
 
 const NewPostForm = ({ addPost, initComment }) => {
 	const initialState = { title: "", description: "", body: "" };
 	const [formData, handleChange] = useFormState(initialState);
+	const dispatch = useDispatch();
 
 	const navigate = useNavigate();
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		const id = uuid();
-		addPost({ ...formData, id });
+		dispatch(addPost(formData));
 		initComment(id);
 		navigate("/");
 	};
