@@ -1,14 +1,15 @@
+import { useSelector } from "react-redux";
 import Comment from "./Comment";
 import NewCommentForm from "./NewCommentForm";
 
-const CommentsSection = ({ comments, addComment, deleteComment, postId }) => {
+const CommentsSection = ({ postId }) => {
+	const comments = useSelector((state) => state.comments[postId]);
 	const commentComponents = Object.keys(comments).map((commentId) => (
 		<Comment
 			key={commentId}
 			commentId={commentId}
 			postId={postId}
 			text={comments[commentId]}
-			deleteComment={deleteComment}
 		/>
 	));
 	return (
@@ -20,11 +21,7 @@ const CommentsSection = ({ comments, addComment, deleteComment, postId }) => {
 				<p>No comments yet...</p>
 			)}
 			<div>
-				<NewCommentForm
-					addComment={addComment}
-					postId={postId}
-					deleteComment={deleteComment}
-				/>
+				<NewCommentForm postId={postId} />
 			</div>
 		</div>
 	);
