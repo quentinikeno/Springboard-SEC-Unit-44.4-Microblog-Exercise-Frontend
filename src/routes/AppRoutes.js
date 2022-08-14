@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import Homepage from "../Homepage";
+import Homepage from "../home/Homepage";
 import NewPostForm from "../posts/NewPostForm";
 import FindPost from "../posts/detail/FindPost";
 
