@@ -1,14 +1,17 @@
-import useFormState from "../../hooks/useFormState";
+import { useDispatch } from "react-redux";
 import { v4 as uuid } from "uuid";
+import useFormState from "../../hooks/useFormState";
+import { addComment } from "../../store/commentsSlice";
 
-const NewCommentForm = ({ addComment, postId }) => {
+const NewCommentForm = ({ postId }) => {
 	const initialState = { text: "" };
 	const [formData, handleChange, setFormData] = useFormState(initialState);
+	const dispatch = useDispatch();
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		const commentId = uuid();
-		addComment(postId, commentId, formData.text);
+		dispatch(addComment({ postId, commentId, text: formData.text }));
 		setFormData(initialState);
 	};
 
