@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 
-const Title = ({ post }) => {
-	const { id, title, description } = post;
+const Title = ({ id, title, description }) => {
 	return (
 		<div className="column is-half">
 			<div className="box">
