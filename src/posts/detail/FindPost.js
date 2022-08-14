@@ -1,9 +1,11 @@
 import { useParams, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import PostDetail from "./PostDetail";
 
 const FindPost = ({ postComments, addComment, deleteComment }) => {
 	const { postId } = useParams();
-	const foundPost = posts.find((post) => post.id === postId);
+	const posts = useSelector((state) => state.posts);
+	const foundPost = Object.keys(posts).find((id) => id === postId);
 	const foundComments = postComments[postId];
 
 	return foundPost ? (
