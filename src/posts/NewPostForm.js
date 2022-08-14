@@ -4,7 +4,7 @@ import { v4 as uuid } from "uuid";
 import { addPost } from "../store/postsSlice";
 import useFormState from "../hooks/useFormState";
 
-const NewPostForm = ({ addPost, initComment }) => {
+const NewPostForm = ({ initComment }) => {
 	const initialState = { title: "", description: "", body: "" };
 	const [formData, handleChange] = useFormState(initialState);
 	const dispatch = useDispatch();
