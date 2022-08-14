@@ -1,7 +1,6 @@
-import { useNavigate } from "react-router-dom";
 import useToggleState from "../../hooks/useToggleState";
+import PostContent from "./PostContent";
 import EditPostForm from "../EditPostForm";
-import CommentsSection from "../comments/CommentsSection";
 
 const PostDetail = ({
 	post,
@@ -13,9 +12,6 @@ const PostDetail = ({
 }) => {
 	const [isEditing, toggleIsEditing] = useToggleState(false);
 
-	const navigate = useNavigate();
-	const { id, title, description, body } = post;
-
 	if (isEditing)
 		return (
 			<EditPostForm
@@ -25,41 +21,15 @@ const PostDetail = ({
 			/>
 		);
 
-	const handleDelete = () => {
-		deletePost(id);
-		navigate("/");
-	};
-
 	return (
-		<section className="section">
-			<div className="is-flex is-justify-content-space-between">
-				<div>
-					<h2 className="title is-2">{title}</h2>
-					<p className="subtitle is-4">{description}</p>
-				</div>
-				<div>
-					<button
-						className="button is-info mr-3"
-						onClick={toggleIsEditing}
-					>
-						Edit <i className="fa-solid fa-pen-to-square ml-3"></i>
-					</button>
-					<button className="button is-danger" onClick={handleDelete}>
-						Delete <i className="fa-solid fa-trash ml-3"></i>
-					</button>
-				</div>
-			</div>
-			<div className="my-3">
-				<p>{body}</p>
-			</div>
-			<hr />
-			<CommentsSection
-				comments={comments}
-				addComment={addComment}
-				deleteComment={deleteComment}
-				postId={post.id}
-			/>
-		</section>
+		<PostContent
+			post={post}
+			comments={comments}
+			addComment={addComment}
+			deleteComment={deleteComment}
+			deletePost={deletePost}
+			toggleIsEditing={toggleIsEditing}
+		/>
 	);
 };
 
