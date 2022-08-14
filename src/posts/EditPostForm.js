@@ -1,12 +1,16 @@
+import { useSelector, useDispatch } from "react-redux";
+import { editPost } from "../store/postsSlice";
 import useFormState from "../hooks/useFormState";
 
-const EditPostForm = ({ post, editPost, toggleIsEditing }) => {
+const EditPostForm = ({ postId, toggleIsEditing }) => {
 	const initialState = post;
 	const [formData, handleChange] = useFormState(initialState);
+	const post = useSelector((state) => state.posts[postId]);
+	const dispatch = useDispatch();
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		editPost(formData);
+		dispatch(editPost({ ...formData, id: postId }));
 		toggleIsEditing();
 	};
 
