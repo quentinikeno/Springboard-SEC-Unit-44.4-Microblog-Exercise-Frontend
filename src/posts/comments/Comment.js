@@ -9,8 +9,8 @@ const Comment = ({ text, deleteComment, commentId, postId }) => {
 					<p>{text}</p>
 				</div>
 			</div>
-			<div class="media-right">
-				<button class="delete" onClick={handleDelete}></button>
+			<div className="media-right">
+				<button className="delete" onClick={handleDelete}></button>
 			</div>
 		</div>
 	);
