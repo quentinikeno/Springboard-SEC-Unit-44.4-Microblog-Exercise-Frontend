@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchTitles } from "../store/titlesSlice";
+import { getTitles } from "../store/titlesSlice";
 import Title from "./Title";
 
 const TitleList = () => {
@@ -9,7 +9,7 @@ const TitleList = () => {
 	const postIds = Object.keys(titles);
 
 	useEffect(() => {
-		dispatch(fetchTitles());
+		dispatch(getTitles());
 	}, []);
 
 	if (isLoading) return <p>Loading...</p>;

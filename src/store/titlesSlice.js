@@ -8,7 +8,7 @@ const initialState = {
 	isLoading: false,
 };
 
-export const fetchTitles = createAsyncThunk("titles/fetchTitles", async () => {
+export const getTitles = createAsyncThunk("titles/getTitles", async () => {
 	try {
 		const response = await axios.get(titlesURL);
 		// Data from API will be in the form of [{ id, title, description, votes, }, ...]
@@ -28,14 +28,14 @@ export const titlesSlice = createSlice({
 	reducers: {},
 	extraReducers: (builder) => {
 		builder
-			.addCase(fetchTitles.pending, (state) => {
+			.addCase(getTitles.pending, (state) => {
 				state.isLoading = true;
 			})
-			.addCase(fetchTitles.fulfilled, (state, action) => {
+			.addCase(getTitles.fulfilled, (state, action) => {
 				state.isLoading = false;
 				state.titles = action.payload;
 			})
-			.addCase(fetchTitles.rejected, (state, action) => {
+			.addCase(getTitles.rejected, (state, action) => {
 				state.isLoading = false;
 				state.titles = action.payload;
 			});
