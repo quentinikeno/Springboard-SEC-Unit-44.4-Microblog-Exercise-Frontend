@@ -1,18 +1,26 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { deletePost } from "../../store/postsSlice";
+import { deletePost, getPost } from "../../store/postsSlice";
 import CommentsSection from "../comments/CommentsSection";
 
 const PostContent = ({ postId, toggleIsEditing }) => {
-	const post = useSelector((state) => state.posts[postId]);
+	const post = useSelector((state) => state.posts.posts[postId]);
+	const isLoading = useSelector((state) => state.posts.isLoading);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { title, description, body } = post;
+
+	useEffect(() => {
+		if (!post) dispatch(getPost(postId));
+	}, [dispatch, postId, post]);
 
 	const handleDelete = () => {
 		dispatch(deletePost(postId));
 		navigate("/");
 	};
+
+	if (isLoading) return <p>Loading...</p>;
 
 	return (
 		<section className="section">
