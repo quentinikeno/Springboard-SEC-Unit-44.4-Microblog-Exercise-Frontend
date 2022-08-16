@@ -13,13 +13,12 @@ export const fetchTitles = createAsyncThunk("titles/fetchTitles", async () => {
 		const response = await axios.get(titlesURL);
 		// Data from API will be in the form of [{ id, title, description, votes, }, ...]
 		// Change it to be in the form of {id: {title, description, votes}, ...}
-		const titleData = response.data.reduce((previous, current) => {
+		return response.data.reduce((previous, current) => {
 			const { id, title, description, votes } = current;
-			previous[id] = { title, description, votes };
+			return { ...previous, [id]: { title, description, votes } };
 		}, {});
-		return titleData;
 	} catch (error) {
-		return err.message;
+		return error.message;
 	}
 });
 
