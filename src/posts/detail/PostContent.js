@@ -9,18 +9,19 @@ const PostContent = ({ postId, toggleIsEditing }) => {
 	const isLoading = useSelector((state) => state.posts.isLoading);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const { title, description, body } = post;
 
 	useEffect(() => {
 		if (!post) dispatch(getPost(postId));
 	}, [dispatch, postId, post]);
 
+	if (!post || isLoading) return <p>Loading...</p>;
+
+	const { title, description, body } = post;
+
 	const handleDelete = () => {
 		dispatch(deletePost(postId));
 		navigate("/");
 	};
-
-	if (isLoading) return <p>Loading...</p>;
 
 	return (
 		<section className="section">
@@ -45,7 +46,7 @@ const PostContent = ({ postId, toggleIsEditing }) => {
 				<p>{body}</p>
 			</div>
 			<hr />
-			<CommentsSection postId={postId} />
+			{/* <CommentsSection postId={postId} /> */}
 		</section>
 	);
 };
