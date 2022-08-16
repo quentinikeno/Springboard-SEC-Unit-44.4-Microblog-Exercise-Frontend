@@ -11,7 +11,10 @@ const PostContent = ({ postId, toggleIsEditing }) => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (!post) dispatch(getPost(postId));
+		const getPostFromAPI = async () => {
+			dispatch(getPost(postId));
+		};
+		if (!post) getPostFromAPI();
 	}, [dispatch, postId, post]);
 
 	if (!post || isLoading) return <p>Loading...</p>;
