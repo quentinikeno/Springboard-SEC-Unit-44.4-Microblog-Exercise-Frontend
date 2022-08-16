@@ -1,21 +1,32 @@
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchTitles } from "../store/titlesSlice";
 import Title from "./Title";
 
 const TitleList = () => {
-	const posts = useSelector((state) => state.posts);
-	const postIds = Object.keys(posts);
+	const dispatch = useDispatch();
+	const { titles, isLoading } = useSelector((state) => state.titles);
+	const postIds = Object.keys(titles);
+
+	useEffect(() => {
+		dispatch(fetchTitles());
+	}, []);
+
+	if (isLoading) return <p>Loading...</p>;
 
 	if (postIds.length === 0) return <p>No posts to display yet!</p>;
 
-	const titles = postIds.map((id) => (
+	const titleComponents = postIds.map((id) => (
 		<Title
 			key={id}
 			id={id}
-			title={posts[id].title}
-			description={posts[id].description}
+			title={titles[id].title}
+			description={titles[id].description}
 		/>
 	));
-	return <div className="columns is-multiline is-desktop">{titles}</div>;
+	return (
+		<div className="columns is-multiline is-desktop">{titleComponents}</div>
+	);
 };
 
 export default TitleList;
