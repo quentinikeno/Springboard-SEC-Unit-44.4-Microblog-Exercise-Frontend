@@ -10,7 +10,7 @@ const TitleList = () => {
 
 	useEffect(() => {
 		dispatch(getTitles());
-	}, []);
+	}, [dispatch]);
 
 	if (isLoading) return <p>Loading...</p>;
 
