@@ -2,7 +2,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { v4 as uuid } from "uuid";
 import { addPost } from "../store/postsSlice";
-import { initComment } from "../store/commentsSlice";
 import useFormState from "../hooks/useFormState";
 
 const NewPostForm = () => {
@@ -16,7 +15,6 @@ const NewPostForm = () => {
 		event.preventDefault();
 		const id = uuid();
 		dispatch(addPost({ ...formData, id }));
-		dispatch(initComment(id));
 		navigate("/");
 	};
 
