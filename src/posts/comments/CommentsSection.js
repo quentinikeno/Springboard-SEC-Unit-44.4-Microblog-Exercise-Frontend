@@ -7,7 +7,7 @@ const CommentsSection = ({ postId, comments }) => {
 			key={comment.id}
 			commentId={comment.id}
 			postId={postId}
-			text={comments.text}
+			text={comment.text}
 		/>
 	));
 	return (
