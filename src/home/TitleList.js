@@ -9,7 +9,10 @@ const TitleList = () => {
 	const postIds = Object.keys(titles);
 
 	useEffect(() => {
-		dispatch(getTitles());
+		const getTitlesFromAPI = async () => {
+			await dispatch(getTitles());
+		};
+		getTitlesFromAPI();
 	}, [dispatch]);
 
 	if (isLoading) return <p>Loading...</p>;
