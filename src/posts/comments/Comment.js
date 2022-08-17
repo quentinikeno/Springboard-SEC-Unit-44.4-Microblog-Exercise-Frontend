@@ -1,11 +1,11 @@
 import { useDispatch } from "react-redux";
-import { deleteComment } from "../../store/postsSlice";
+import { deleteCommentFromAPI } from "../../store/postsSlice";
 
 const Comment = ({ text, commentId, postId }) => {
 	const dispatch = useDispatch();
 
 	const handleDelete = () => {
-		dispatch(deleteComment({ postId, commentId }));
+		dispatch(deleteCommentFromAPI({ postId, commentId }));
 	};
 	return (
 		<div className="media">
