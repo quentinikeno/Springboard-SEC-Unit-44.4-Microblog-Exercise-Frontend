@@ -52,6 +52,18 @@ export const updatePostFromAPI = createAsyncThunk(
 	}
 );
 
+export const deletePostFromAPI = createAsyncThunk(
+	"posts/deletePostFromAPI",
+	async (id) => {
+		try {
+			await axios.delete(`${apiPostURL}/${id}`);
+			return id;
+		} catch (error) {
+			return error.message;
+		}
+	}
+);
+
 const reducers = {
 	addPost: (state, action) => {
 		const { id, title, description, body, comments = [] } = action.payload;
@@ -113,6 +125,17 @@ export const postsSlice = createSlice({
 				state.isLoading = false;
 			})
 			.addCase(updatePostFromAPI.rejected, (state, action) => {
+				state.isLoading = false;
+				state.posts = action.payload;
+			})
+			.addCase(deletePostFromAPI.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(deletePostFromAPI.fulfilled, (state, action) => {
+				reducers.deletePost(state, action);
+				state.isLoading = false;
+			})
+			.addCase(deletePostFromAPI.rejected, (state, action) => {
 				state.isLoading = false;
 				state.posts = action.payload;
 			});
