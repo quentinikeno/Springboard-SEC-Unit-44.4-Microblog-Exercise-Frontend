@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { v4 as uuid } from "uuid";
 import useFormState from "../../hooks/useFormState";
-import { addComment } from "../../store/commentsSlice";
+import { addComment } from "../../store/postsSlice";
 
 const NewCommentForm = ({ postId }) => {
 	const initialState = { text: "" };
