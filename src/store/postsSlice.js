@@ -27,7 +27,23 @@ export const sendPostToAPI = createAsyncThunk(
 				description,
 				body,
 			});
-			console.log(response.data);
+			// { id, title, description, body, votes }
+			return response.data;
+		} catch (error) {
+			return error.message;
+		}
+	}
+);
+
+export const updatePostFromAPI = createAsyncThunk(
+	"posts/updatePostFromAPI",
+	async ({ title, description, body, id }) => {
+		try {
+			const response = await axios.put(`${apiPostURL}/${id}`, {
+				title,
+				description,
+				body,
+			});
 			// { id, title, description, body, votes }
 			return response.data;
 		} catch (error) {
@@ -82,10 +98,21 @@ export const postsSlice = createSlice({
 				state.isLoading = true;
 			})
 			.addCase(sendPostToAPI.fulfilled, (state, action) => {
-				reducers.addPost(state, action.payload);
+				reducers.addPost(state, action);
 				state.isLoading = false;
 			})
 			.addCase(sendPostToAPI.rejected, (state, action) => {
+				state.isLoading = false;
+				state.posts = action.payload;
+			})
+			.addCase(updatePostFromAPI.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(updatePostFromAPI.fulfilled, (state, action) => {
+				reducers.editPost(state, action);
+				state.isLoading = false;
+			})
+			.addCase(updatePostFromAPI.rejected, (state, action) => {
 				state.isLoading = false;
 				state.posts = action.payload;
 			});
