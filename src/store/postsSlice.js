@@ -86,6 +86,18 @@ export const sendCommentToAPI = createAsyncThunk(
 	}
 );
 
+export const deleteCommentFromAPI = createAsyncThunk(
+	"posts/deleteCommentFromAPI",
+	async ({ postId, commentId }, { rejectWithValue }) => {
+		try {
+			await axios.delete(`${apiPostURL}/${postId}/comments/${commentId}`);
+			return { postId, commentId };
+		} catch (error) {
+			return rejectWithValue(error.message);
+		}
+	}
+);
+
 const reducers = {
 	addPost: (state, action) => {
 		const { id, title, description, body, comments = [] } = action.payload;
@@ -134,7 +146,7 @@ const extraReducers = (builder) => {
 			reducers.addPost(state, action);
 			state.isLoading = false;
 		})
-		.addCase(sendPostToAPI.rejected, (state, action) => {
+		.addCase(sendPostToAPI.rejected, (state) => {
 			state.isLoading = false;
 		})
 		.addCase(updatePostFromAPI.pending, (state) => {
@@ -144,7 +156,7 @@ const extraReducers = (builder) => {
 			reducers.editPost(state, action);
 			state.isLoading = false;
 		})
-		.addCase(updatePostFromAPI.rejected, (state, action) => {
+		.addCase(updatePostFromAPI.rejected, (state) => {
 			state.isLoading = false;
 		})
 		.addCase(deletePostFromAPI.pending, (state) => {
@@ -164,7 +176,17 @@ const extraReducers = (builder) => {
 			reducers.addComment(state, action);
 			state.isLoading = false;
 		})
-		.addCase(sendCommentToAPI.rejected, (state, action) => {
+		.addCase(sendCommentToAPI.rejected, (state) => {
+			state.isLoading = false;
+		})
+		.addCase(deleteCommentFromAPI.pending, (state) => {
+			state.isLoading = true;
+		})
+		.addCase(deleteCommentFromAPI.fulfilled, (state, action) => {
+			reducers.deleteComment(state, action);
+			state.isLoading = false;
+		})
+		.addCase(deleteCommentFromAPI.rejected, (state) => {
 			state.isLoading = false;
 		});
 };
