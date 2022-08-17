@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { deletePost, getPostFromAPI } from "../../store/postsSlice";
+import { deletePostFromAPI, getPostFromAPI } from "../../store/postsSlice";
 import CommentsSection from "../comments/CommentsSection";
 
 const PostContent = ({ postId, toggleIsEditing }) => {
@@ -22,7 +22,7 @@ const PostContent = ({ postId, toggleIsEditing }) => {
 	const { title, description, body, comments } = post;
 
 	const handleDelete = () => {
-		dispatch(deletePost(postId));
+		dispatch(deletePostFromAPI(postId));
 		navigate("/");
 	};
 
