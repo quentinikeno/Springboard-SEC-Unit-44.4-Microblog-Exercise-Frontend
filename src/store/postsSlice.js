@@ -18,8 +18,8 @@ export const getPostFromAPI = createAsyncThunk(
 	}
 );
 
-export const addPostToAPI = createAsyncThunk(
-	"posts/addPostToAPI",
+export const sendPostToAPI = createAsyncThunk(
+	"posts/sendPostToAPI",
 	async (title, description, body) => {
 		try {
 			const response = await axios.post(`${apiPostURL}`, {
@@ -77,14 +77,14 @@ export const postsSlice = createSlice({
 				state.isLoading = false;
 				state.posts = action.payload;
 			})
-			.addCase(addPostToAPI.pending, (state) => {
+			.addCase(sendPostToAPI.pending, (state) => {
 				state.isLoading = true;
 			})
-			.addCase(addPostToAPI.fulfilled, (state, action) => {
+			.addCase(sendPostToAPI.fulfilled, (state, action) => {
 				reducers.addPost(state, action);
 				state.isLoading = false;
 			})
-			.addCase(addPostToAPI.rejected, (state, action) => {
+			.addCase(sendPostToAPI.rejected, (state, action) => {
 				state.isLoading = false;
 				state.posts = action.payload;
 			});
