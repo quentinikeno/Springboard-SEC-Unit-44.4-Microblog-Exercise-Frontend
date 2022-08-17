@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { deletePost, getPost } from "../../store/postsSlice";
+import { deletePost, getPostFromAPI } from "../../store/postsSlice";
 import CommentsSection from "../comments/CommentsSection";
 
 const PostContent = ({ postId, toggleIsEditing }) => {
@@ -11,10 +11,10 @@ const PostContent = ({ postId, toggleIsEditing }) => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		const getPostFromAPI = async () => {
-			dispatch(getPost(postId));
+		const getPost = async () => {
+			dispatch(getPostFromAPI(postId));
 		};
-		if (!post) getPostFromAPI();
+		if (!post) getPost();
 	}, [dispatch, postId, post]);
 
 	if (!post || isLoading) return <p>Loading...</p>;

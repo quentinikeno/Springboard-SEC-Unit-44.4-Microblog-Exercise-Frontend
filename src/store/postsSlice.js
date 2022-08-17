@@ -5,15 +5,18 @@ const apiPostURL = "http://localhost:5000/api/posts";
 // posts: {postId: {title, description, body, votes, comments: [ { id, text }, ... ]}, ...}
 const initialState = { posts: {}, isLoading: false };
 
-export const getPost = createAsyncThunk("posts/getPosts", async (postId) => {
-	try {
-		const response = await axios.get(`${apiPostURL}/${postId}`);
-		// { id, title, description, body, votes, comments: [ { id, text }, ... ], }
-		return response.data;
-	} catch (error) {
-		return error.message;
+export const getPostFromAPI = createAsyncThunk(
+	"posts/getPostFromAPI",
+	async (postId) => {
+		try {
+			const response = await axios.get(`${apiPostURL}/${postId}`);
+			// { id, title, description, body, votes, comments: [ { id, text }, ... ], }
+			return response.data;
+		} catch (error) {
+			return error.message;
+		}
 	}
-});
+);
 
 export const addPostToAPI = createAsyncThunk(
 	"posts/addPostToAPI",
@@ -63,14 +66,14 @@ export const postsSlice = createSlice({
 	reducers,
 	extraReducers: (builder) => {
 		builder
-			.addCase(getPost.pending, (state) => {
+			.addCase(getPostFromAPI.pending, (state) => {
 				state.isLoading = true;
 			})
-			.addCase(getPost.fulfilled, (state, action) => {
+			.addCase(getPostFromAPI.fulfilled, (state, action) => {
 				reducers.addPost(state, action);
 				state.isLoading = false;
 			})
-			.addCase(getPost.rejected, (state, action) => {
+			.addCase(getPostFromAPI.rejected, (state, action) => {
 				state.isLoading = false;
 				state.posts = action.payload;
 			})
