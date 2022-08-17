@@ -1,7 +1,6 @@
 import { useDispatch } from "react-redux";
-import { v4 as uuid } from "uuid";
 import useFormState from "../../hooks/useFormState";
-import { addComment } from "../../store/postsSlice";
+import { sendCommentToAPI } from "../../store/postsSlice";
 
 const NewCommentForm = ({ postId }) => {
 	const initialState = { text: "" };
@@ -10,8 +9,7 @@ const NewCommentForm = ({ postId }) => {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		const commentId = uuid();
-		dispatch(addComment({ postId, commentId, text: formData.text }));
+		dispatch(sendCommentToAPI({ postId, text: formData.text }));
 		setFormData(initialState);
 	};
 
