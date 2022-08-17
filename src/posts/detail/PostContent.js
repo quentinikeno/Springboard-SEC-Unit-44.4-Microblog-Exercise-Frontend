@@ -19,7 +19,7 @@ const PostContent = ({ postId, toggleIsEditing }) => {
 
 	if (!post || isLoading) return <p>Loading...</p>;
 
-	const { title, description, body } = post;
+	const { title, description, body, comments } = post;
 
 	const handleDelete = () => {
 		dispatch(deletePost(postId));
@@ -49,7 +49,7 @@ const PostContent = ({ postId, toggleIsEditing }) => {
 				<p>{body}</p>
 			</div>
 			<hr />
-			<CommentsSection postId={postId} />
+			<CommentsSection postId={postId} comments={comments} />
 		</section>
 	);
 };
