@@ -4,21 +4,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { deletePostFromAPI, getPostFromAPI } from "../../store/postsSlice";
 import CommentsSection from "../comments/CommentsSection";
 
-const PostContent = ({ postId, toggleIsEditing }) => {
-	const post = useSelector((state) => state.posts.posts[postId]);
-	const isLoading = useSelector((state) => state.posts.isLoading);
-	const dispatch = useDispatch();
+const PostContent = ({ postId, post, toggleIsEditing }) => {
 	const navigate = useNavigate();
-
-	useEffect(() => {
-		const getPost = async () => {
-			dispatch(getPostFromAPI(postId));
-		};
-		if (!post) getPost();
-	}, [dispatch, postId, post]);
-
-	if (!post || isLoading) return <p>Loading...</p>;
-
+	const dispatch = useDispatch();
 	const { title, description, body, comments } = post;
 
 	const handleDelete = () => {
