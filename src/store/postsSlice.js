@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const postURL = "http://localhost:5000/api/posts";
-// posts: {postId: {title, description, body}, ...}
+// posts: {postId: {title, description, body, votes, comments: [ { id, text }, ... ]}, ...}
 const initialState = { posts: {}, isLoading: false };
 
 export const getPost = createAsyncThunk("posts/getPosts", async (postId) => {
@@ -21,15 +21,23 @@ export const postsSlice = createSlice({
 	reducers: {
 		addPost: (state, action) => {
 			const { id, title, description, body } = action.payload;
-			state.posts[id] = { title, description, body };
+			state.posts[id] = { title, description, body, comments: {} };
 		},
 
 		editPost: (state, action) => {
 			const { id, title, description, body } = action.payload;
-			state.posts[id] = { title, description, body };
+			state.posts[id] = { ...state.posts[id], title, description, body };
 		},
 		deletePost: (state, action) => {
 			delete state.posts[action.payload];
+		},
+		addComment: (state, action) => {
+			const { postId, commentId, text } = action.payload;
+			state.posts[postId].comments[commentId] = text;
+		},
+		deleteComment: (state, action) => {
+			const { postId, commentId } = action.payload;
+			delete state.posts[postId].comments[commentId];
 		},
 	},
 	extraReducers: (builder) => {
@@ -50,6 +58,7 @@ export const postsSlice = createSlice({
 	},
 });
 
-export const { addPost, editPost, deletePost } = postsSlice.actions;
+export const { addPost, editPost, deletePost, addComment, deleteComment } =
+	postsSlice.actions;
 
 export default postsSlice.reducer;
