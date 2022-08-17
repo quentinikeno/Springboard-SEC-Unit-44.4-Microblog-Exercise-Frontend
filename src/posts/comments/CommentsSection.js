@@ -1,15 +1,13 @@
-import { useSelector } from "react-redux";
 import Comment from "./Comment";
 import NewCommentForm from "./NewCommentForm";
 
-const CommentsSection = ({ postId }) => {
-	const comments = useSelector((state) => state.comments[postId]);
-	const commentComponents = Object.keys(comments).map((commentId) => (
+const CommentsSection = ({ postId, comments }) => {
+	const commentComponents = comments.map((comment) => (
 		<Comment
-			key={commentId}
-			commentId={commentId}
+			key={comment.id}
+			commentId={comment.id}
 			postId={postId}
-			text={comments[commentId]}
+			text={comments.text}
 		/>
 	));
 	return (
