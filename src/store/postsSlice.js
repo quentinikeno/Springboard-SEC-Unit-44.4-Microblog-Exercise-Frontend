@@ -11,8 +11,9 @@ export const getPostFromAPI = createAsyncThunk(
 	async (postId, { rejectWithValue }) => {
 		try {
 			const response = await axios.get(`${apiPostURL}/${postId}`);
-			// { id, title, description, body, votes, comments: [ { id, text }, ... ], }
+			// Throw an error if the post is not found.
 			if (!response.data) throw new Error("not found");
+			// { id, title, description, body, votes, comments: [ { id, text }, ... ], }
 			return response.data;
 		} catch (error) {
 			return rejectWithValue(error.message);
@@ -60,6 +61,25 @@ export const deletePostFromAPI = createAsyncThunk(
 		try {
 			await axios.delete(`${apiPostURL}/${id}`);
 			return id;
+		} catch (error) {
+			return rejectWithValue(error.message);
+		}
+	}
+);
+
+export const sendCommentToAPI = createAsyncThunk(
+	"posts/sendCommentToAPI",
+	async ({ text, postId }, { rejectWithValue }) => {
+		try {
+			const response = await axios.post(
+				`${apiPostURL}/${postId}/comments`,
+				{
+					text,
+				}
+			);
+			// { text, id }
+			const { text: commentText, id } = response.data;
+			return { text: commentText, postId, commentId: id };
 		} catch (error) {
 			return rejectWithValue(error.message);
 		}
@@ -135,6 +155,16 @@ const extraReducers = (builder) => {
 			state.isLoading = false;
 		})
 		.addCase(deletePostFromAPI.rejected, (state) => {
+			state.isLoading = false;
+		})
+		.addCase(sendCommentToAPI.pending, (state) => {
+			state.isLoading = true;
+		})
+		.addCase(sendCommentToAPI.fulfilled, (state, action) => {
+			reducers.addComment(state, action);
+			state.isLoading = false;
+		})
+		.addCase(sendCommentToAPI.rejected, (state, action) => {
 			state.isLoading = false;
 		});
 };
