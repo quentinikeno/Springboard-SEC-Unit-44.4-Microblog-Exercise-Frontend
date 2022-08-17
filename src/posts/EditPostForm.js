@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { editPost } from "../store/postsSlice";
+import { updatePostFromAPI } from "../store/postsSlice";
 import useFormState from "../hooks/useFormState";
 
 const EditPostForm = ({ postId, toggleIsEditing }) => {
@@ -9,7 +9,7 @@ const EditPostForm = ({ postId, toggleIsEditing }) => {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		dispatch(editPost({ ...formData, id: postId }));
+		dispatch(updatePostFromAPI({ ...formData, id: postId }));
 		toggleIsEditing();
 	};
 
