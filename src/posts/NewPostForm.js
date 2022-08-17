@@ -1,7 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { v4 as uuid } from "uuid";
-import { addPost } from "../store/postsSlice";
+import { sendPostToAPI } from "../store/postsSlice";
 import useFormState from "../hooks/useFormState";
 
 const NewPostForm = () => {
@@ -13,8 +12,7 @@ const NewPostForm = () => {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		const id = uuid();
-		dispatch(addPost({ ...formData, id }));
+		dispatch(sendPostToAPI(formData));
 		navigate("/");
 	};
 
