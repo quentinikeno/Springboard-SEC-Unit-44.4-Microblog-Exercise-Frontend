@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { deleteComment } from "../../store/commentsSlice";
+import { deleteComment } from "../../store/postsSlice";
 
 const Comment = ({ text, commentId, postId }) => {
 	const dispatch = useDispatch();
