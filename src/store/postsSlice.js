@@ -21,7 +21,7 @@ export const postsSlice = createSlice({
 	reducers: {
 		addPost: (state, action) => {
 			const { id, title, description, body } = action.payload;
-			state.posts[id] = { title, description, body, comments: {} };
+			state.posts[id] = { title, description, body, comments: [] };
 		},
 
 		editPost: (state, action) => {
@@ -33,11 +33,13 @@ export const postsSlice = createSlice({
 		},
 		addComment: (state, action) => {
 			const { postId, commentId, text } = action.payload;
-			state.posts[postId].comments[commentId] = text;
+			state.posts[postId].comments.push({ id: commentId, text });
 		},
 		deleteComment: (state, action) => {
 			const { postId, commentId } = action.payload;
-			delete state.posts[postId].comments[commentId];
+			state.posts[postId].comments = state.posts[postId].comments.filter(
+				(comment) => comment.id !== commentId
+			);
 		},
 	},
 	extraReducers: (builder) => {
