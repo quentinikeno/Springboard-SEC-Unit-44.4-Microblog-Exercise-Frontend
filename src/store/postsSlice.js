@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const apiPostURL = "http://localhost:5000/api/posts";
+const apiPostURL =
+	process.env.REACT_APP_API_URL || "http://localhost:5000/api/posts";
 // posts: {postId: {title, description, body, votes, comments: [ { id, text }, ... ]}, ...}
 const initialState = { posts: {}, isLoading: false, error: null };
 
@@ -93,54 +94,56 @@ const reducers = {
 	},
 };
 
+const extraReducers = (builder) => {
+	builder
+		.addCase(getPostFromAPI.pending, (state) => {
+			state.isLoading = true;
+		})
+		.addCase(getPostFromAPI.fulfilled, (state, action) => {
+			reducers.addPost(state, action);
+			state.isLoading = false;
+		})
+		.addCase(getPostFromAPI.rejected, (state, action) => {
+			state.isLoading = false;
+			state.error = action.payload;
+		})
+		.addCase(sendPostToAPI.pending, (state) => {
+			state.isLoading = true;
+		})
+		.addCase(sendPostToAPI.fulfilled, (state, action) => {
+			reducers.addPost(state, action);
+			state.isLoading = false;
+		})
+		.addCase(sendPostToAPI.rejected, (state, action) => {
+			state.isLoading = false;
+		})
+		.addCase(updatePostFromAPI.pending, (state) => {
+			state.isLoading = true;
+		})
+		.addCase(updatePostFromAPI.fulfilled, (state, action) => {
+			reducers.editPost(state, action);
+			state.isLoading = false;
+		})
+		.addCase(updatePostFromAPI.rejected, (state, action) => {
+			state.isLoading = false;
+		})
+		.addCase(deletePostFromAPI.pending, (state) => {
+			state.isLoading = true;
+		})
+		.addCase(deletePostFromAPI.fulfilled, (state, action) => {
+			reducers.deletePost(state, action);
+			state.isLoading = false;
+		})
+		.addCase(deletePostFromAPI.rejected, (state) => {
+			state.isLoading = false;
+		});
+};
+
 export const postsSlice = createSlice({
 	name: "posts",
 	initialState,
 	reducers,
-	extraReducers: (builder) => {
-		builder
-			.addCase(getPostFromAPI.pending, (state) => {
-				state.isLoading = true;
-			})
-			.addCase(getPostFromAPI.fulfilled, (state, action) => {
-				reducers.addPost(state, action);
-				state.isLoading = false;
-			})
-			.addCase(getPostFromAPI.rejected, (state, action) => {
-				state.isLoading = false;
-				state.error = action.payload;
-			})
-			.addCase(sendPostToAPI.pending, (state) => {
-				state.isLoading = true;
-			})
-			.addCase(sendPostToAPI.fulfilled, (state, action) => {
-				reducers.addPost(state, action);
-				state.isLoading = false;
-			})
-			.addCase(sendPostToAPI.rejected, (state, action) => {
-				state.isLoading = false;
-			})
-			.addCase(updatePostFromAPI.pending, (state) => {
-				state.isLoading = true;
-			})
-			.addCase(updatePostFromAPI.fulfilled, (state, action) => {
-				reducers.editPost(state, action);
-				state.isLoading = false;
-			})
-			.addCase(updatePostFromAPI.rejected, (state, action) => {
-				state.isLoading = false;
-			})
-			.addCase(deletePostFromAPI.pending, (state) => {
-				state.isLoading = true;
-			})
-			.addCase(deletePostFromAPI.fulfilled, (state, action) => {
-				reducers.deletePost(state, action);
-				state.isLoading = false;
-			})
-			.addCase(deletePostFromAPI.rejected, (state, action) => {
-				state.isLoading = false;
-			});
-	},
+	extraReducers,
 });
 
 export const {
