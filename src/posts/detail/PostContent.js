@@ -1,7 +1,6 @@
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { deletePostFromAPI, getPostFromAPI } from "../../store/postsSlice";
+import { useDispatch } from "react-redux";
+import { deletePostFromAPI } from "../../store/postsSlice";
 import CommentsSection from "../comments/CommentsSection";
 
 const PostContent = ({ postId, post, toggleIsEditing }) => {

@@ -3,24 +3,25 @@ import axios from "axios";
 
 const apiPostURL = "http://localhost:5000/api/posts";
 // posts: {postId: {title, description, body, votes, comments: [ { id, text }, ... ]}, ...}
-const initialState = { posts: {}, isLoading: false };
+const initialState = { posts: {}, isLoading: false, error: null };
 
 export const getPostFromAPI = createAsyncThunk(
 	"posts/getPostFromAPI",
-	async (postId) => {
+	async (postId, { rejectWithValue }) => {
 		try {
 			const response = await axios.get(`${apiPostURL}/${postId}`);
 			// { id, title, description, body, votes, comments: [ { id, text }, ... ], }
+			if (!response.data) throw new Error("not found");
 			return response.data;
 		} catch (error) {
-			return error.message;
+			return rejectWithValue(error.message);
 		}
 	}
 );
 
 export const sendPostToAPI = createAsyncThunk(
 	"posts/sendPostToAPI",
-	async ({ title, description, body }) => {
+	async ({ title, description, body }, { rejectWithValue }) => {
 		try {
 			const response = await axios.post(`${apiPostURL}`, {
 				title,
@@ -30,14 +31,14 @@ export const sendPostToAPI = createAsyncThunk(
 			// { id, title, description, body, votes }
 			return response.data;
 		} catch (error) {
-			return error.message;
+			return rejectWithValue(error.message);
 		}
 	}
 );
 
 export const updatePostFromAPI = createAsyncThunk(
 	"posts/updatePostFromAPI",
-	async ({ title, description, body, id }) => {
+	async ({ title, description, body, id }, { rejectWithValue }) => {
 		try {
 			const response = await axios.put(`${apiPostURL}/${id}`, {
 				title,
@@ -47,19 +48,19 @@ export const updatePostFromAPI = createAsyncThunk(
 			// { id, title, description, body, votes }
 			return response.data;
 		} catch (error) {
-			return error.message;
+			return rejectWithValue(error.message);
 		}
 	}
 );
 
 export const deletePostFromAPI = createAsyncThunk(
 	"posts/deletePostFromAPI",
-	async (id) => {
+	async (id, { rejectWithValue }) => {
 		try {
 			await axios.delete(`${apiPostURL}/${id}`);
 			return id;
 		} catch (error) {
-			return error.message;
+			return rejectWithValue(error.message);
 		}
 	}
 );
@@ -87,6 +88,9 @@ const reducers = {
 			(comment) => comment.id !== commentId
 		);
 	},
+	unsetError: (state) => {
+		state.error = null;
+	},
 };
 
 export const postsSlice = createSlice({
@@ -104,7 +108,7 @@ export const postsSlice = createSlice({
 			})
 			.addCase(getPostFromAPI.rejected, (state, action) => {
 				state.isLoading = false;
-				state.posts = action;
+				state.error = action.payload;
 			})
 			.addCase(sendPostToAPI.pending, (state) => {
 				state.isLoading = true;
@@ -115,7 +119,6 @@ export const postsSlice = createSlice({
 			})
 			.addCase(sendPostToAPI.rejected, (state, action) => {
 				state.isLoading = false;
-				state.posts = action.payload;
 			})
 			.addCase(updatePostFromAPI.pending, (state) => {
 				state.isLoading = true;
@@ -126,7 +129,6 @@ export const postsSlice = createSlice({
 			})
 			.addCase(updatePostFromAPI.rejected, (state, action) => {
 				state.isLoading = false;
-				state.posts = action.payload;
 			})
 			.addCase(deletePostFromAPI.pending, (state) => {
 				state.isLoading = true;
@@ -137,12 +139,17 @@ export const postsSlice = createSlice({
 			})
 			.addCase(deletePostFromAPI.rejected, (state, action) => {
 				state.isLoading = false;
-				state.posts = action.payload;
 			});
 	},
 });
 
-export const { addPost, editPost, deletePost, addComment, deleteComment } =
-	postsSlice.actions;
+export const {
+	addPost,
+	editPost,
+	deletePost,
+	addComment,
+	deleteComment,
+	unsetError,
+} = postsSlice.actions;
 
 export default postsSlice.reducer;
