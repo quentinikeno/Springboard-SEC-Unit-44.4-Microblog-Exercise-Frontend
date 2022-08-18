@@ -12,7 +12,9 @@ const CommentsSection = ({ postId, comments }) => {
 	));
 	return (
 		<div>
-			<h4 className="title is-4">Comments</h4>
+			<h4 className="title is-4">
+				Comments <i className="fa-solid fa-comment ml-3"></i>
+			</h4>
 			{commentComponents.length > 0 ? (
 				<div>{commentComponents}</div>
 			) : (
