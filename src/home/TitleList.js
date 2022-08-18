@@ -1,19 +1,8 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { getTitles } from "../store/titlesSlice";
+import useGetTitles from "../hooks/useGetTitles";
 import Title from "./Title";
 
 const TitleList = () => {
-	const dispatch = useDispatch();
-	const { titles, isLoading } = useSelector((state) => state.titles);
-	const postIds = Object.keys(titles);
-
-	useEffect(() => {
-		const getTitlesFromAPI = async () => {
-			await dispatch(getTitles());
-		};
-		getTitlesFromAPI();
-	}, [dispatch]);
+	const [titles, isLoading, postIds] = useGetTitles();
 
 	if (isLoading) return <p>Loading...</p>;
 
