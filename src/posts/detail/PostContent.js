@@ -1,20 +1,18 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { deletePostFromAPI, updateVoteToAPI } from "../../store/postsSlice";
+import { deletePostFromAPI } from "../../store/postsSlice";
+import useUpdateVote from "../../hooks/useUpdateVote";
 import CommentsSection from "../comments/CommentsSection";
 
 const PostContent = ({ postId, post, toggleIsEditing }) => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const handleVote = useUpdateVote(postId, true);
 	const { title, description, body, comments, votes } = post;
 
 	const handleDelete = () => {
 		dispatch(deletePostFromAPI(postId));
 		navigate("/");
-	};
-
-	const handleVote = (direction) => {
-		dispatch(updateVoteToAPI({ postId, direction }));
 	};
 
 	return (
