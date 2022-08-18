@@ -146,6 +146,11 @@ const reducers = {
 		const { postId, votes } = action.payload;
 		state.posts[postId].votes = votes;
 	},
+	incDecVotes: (state, action) => {
+		const { postId, direction } = action.payload;
+		const delta = direction === "up" ? 1 : -1;
+		state.posts[postId].votes = state.posts[postId].votes + delta;
+	},
 	unsetError: (state) => {
 		state.error = null;
 	},
@@ -239,6 +244,7 @@ export const {
 	deletePost,
 	addComment,
 	deleteComment,
+	incDecVotes,
 	unsetError,
 } = postsSlice.actions;
 
