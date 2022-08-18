@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { deletePostFromAPI } from "../../store/postsSlice";
+import { deletePostFromAPI, updateVoteToAPI } from "../../store/postsSlice";
 import CommentsSection from "../comments/CommentsSection";
 
 const PostContent = ({ postId, post, toggleIsEditing }) => {
@@ -11,6 +11,10 @@ const PostContent = ({ postId, post, toggleIsEditing }) => {
 	const handleDelete = () => {
 		dispatch(deletePostFromAPI(postId));
 		navigate("/");
+	};
+
+	const handleVote = (direction) => {
+		dispatch(updateVoteToAPI({ postId, direction }));
 	};
 
 	return (
@@ -34,11 +38,17 @@ const PostContent = ({ postId, post, toggleIsEditing }) => {
 						Delete <i className="fa-solid fa-trash ml-3"></i>
 					</button>
 					<div className="is-flex is-justify-content-center is-align-items-center my-3">
-						<button class="button is-ghost">
+						<button
+							className="button is-ghost"
+							onClick={() => handleVote("up")}
+						>
 							<i className="fa-solid fa-chevron-up fa-xl"></i>
 						</button>
 						<span className="mx-3 is-size-4">{votes}</span>
-						<button class="button is-ghost">
+						<button
+							className="button is-ghost"
+							onClick={() => handleVote("down")}
+						>
 							<i className="fa-solid fa-chevron-down fa-xl"></i>
 						</button>
 					</div>
