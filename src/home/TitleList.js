@@ -11,7 +11,7 @@ const TitleList = () => {
 	const titleComponents = postIds.map((id) => (
 		<Title
 			key={id}
-			id={id}
+			postId={id}
 			title={titles[id].title}
 			description={titles[id].description}
 			votes={titles[id].votes}

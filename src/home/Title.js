@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 import useUpdateVote from "../hooks/useUpdateVote";
 
-const Title = ({ id, title, description, votes }) => {
-	const handleVote = useUpdateVote(id);
+const Title = ({ postId, title, description, votes }) => {
+	const handleVote = useUpdateVote(postId);
 	return (
 		<div className="column is-half">
 			<div className="card">
 				<div className="card-content">
 					<h4 className="title is-4">
-						<Link to={`/${id}`}>{title}</Link>
+						<Link to={`/${postId}`}>{title}</Link>
 					</h4>
 					<p className="subtitle">{description}</p>
 				</div>
