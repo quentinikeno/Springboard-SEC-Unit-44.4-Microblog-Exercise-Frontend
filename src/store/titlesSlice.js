@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const titlesURL = "http://localhost:5000/api/posts";
+const apiPostURL = "http://localhost:5000/api/posts";
 
 const initialState = {
 	titles: {},
@@ -10,7 +10,7 @@ const initialState = {
 
 export const getTitles = createAsyncThunk("titles/getTitles", async () => {
 	try {
-		const response = await axios.get(titlesURL);
+		const response = await axios.get(apiPostURL);
 		// Data from API will be in the form of [{ id, title, description, votes, }, ...]
 		// Change it to be in the form of {id: {title, description, votes}, ...}
 		return response.data.reduce((previous, current) => {
@@ -22,24 +22,56 @@ export const getTitles = createAsyncThunk("titles/getTitles", async () => {
 	}
 });
 
+export const updateVoteToAPI = createAsyncThunk(
+	"titles/updateVoteToAPI",
+	async ({ postId, direction }, { rejectWithValue }) => {
+		try {
+			const response = await axios.post(
+				`${apiPostURL}/${postId}/vote/${direction}`
+			);
+			return { postId, votes: response.data.votes };
+		} catch (error) {
+			return rejectWithValue(error.message);
+		}
+	}
+);
+
+const reducers = {
+	updateVotes: (state, action) => {
+		const { postId, votes } = action.payload;
+		state.titles[postId].votes = votes;
+	},
+};
+
+const extraReducers = (builder) => {
+	builder
+		.addCase(getTitles.pending, (state) => {
+			state.isLoading = true;
+		})
+		.addCase(getTitles.fulfilled, (state, action) => {
+			state.isLoading = false;
+			state.titles = action.payload;
+		})
+		.addCase(getTitles.rejected, (state, action) => {
+			state.isLoading = false;
+		})
+		.addCase(updateVoteToAPI.pending, (state) => {
+			state.isLoading = true;
+		})
+		.addCase(updateVoteToAPI.fulfilled, (state, action) => {
+			state.isLoading = false;
+			reducers.updateVotes(state, action);
+		})
+		.addCase(updateVoteToAPI.rejected, (state, action) => {
+			state.isLoading = false;
+		});
+};
+
 export const titlesSlice = createSlice({
 	name: "titles",
 	initialState,
-	reducers: {},
-	extraReducers: (builder) => {
-		builder
-			.addCase(getTitles.pending, (state) => {
-				state.isLoading = true;
-			})
-			.addCase(getTitles.fulfilled, (state, action) => {
-				state.isLoading = false;
-				state.titles = action.payload;
-			})
-			.addCase(getTitles.rejected, (state, action) => {
-				state.isLoading = false;
-				state.titles = action.payload;
-			});
-	},
+	reducers,
+	extraReducers,
 });
 
 export default titlesSlice.reducer;
