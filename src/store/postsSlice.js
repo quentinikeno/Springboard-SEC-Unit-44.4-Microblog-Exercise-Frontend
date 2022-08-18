@@ -98,6 +98,20 @@ export const deleteCommentFromAPI = createAsyncThunk(
 	}
 );
 
+export const updateVoteToAPI = createAsyncThunk(
+	"posts/updateVoteToAPI",
+	async ({ postId, direction }, { rejectWithValue }) => {
+		try {
+			const response = await axios.post(
+				`${apiPostURL}/${postId}/vote/${direction}`
+			);
+			return { postId, votes: response.data.votes };
+		} catch (error) {
+			return rejectWithValue(error.message);
+		}
+	}
+);
+
 const reducers = {
 	addPost: (state, action) => {
 		const {
@@ -127,6 +141,10 @@ const reducers = {
 		state.posts[postId].comments = state.posts[postId].comments.filter(
 			(comment) => comment.id !== commentId
 		);
+	},
+	updateVotes: (state, action) => {
+		const { postId, votes } = action.payload;
+		state.posts[postId].votes = votes;
 	},
 	unsetError: (state) => {
 		state.error = null;
@@ -194,6 +212,16 @@ const extraReducers = (builder) => {
 			state.isLoading = false;
 		})
 		.addCase(deleteCommentFromAPI.rejected, (state) => {
+			state.isLoading = false;
+		})
+		.addCase(updateVoteToAPI.pending, (state) => {
+			state.isLoading = true;
+		})
+		.addCase(updateVoteToAPI.fulfilled, (state, action) => {
+			reducers.updateVotes(state, action);
+			state.isLoading = false;
+		})
+		.addCase(updateVoteToAPI.rejected, (state) => {
 			state.isLoading = false;
 		});
 };
