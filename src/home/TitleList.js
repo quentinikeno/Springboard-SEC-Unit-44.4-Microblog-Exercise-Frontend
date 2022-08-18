@@ -25,6 +25,7 @@ const TitleList = () => {
 			id={id}
 			title={titles[id].title}
 			description={titles[id].description}
+			votes={titles[id].votes}
 		/>
 	));
 	return (
