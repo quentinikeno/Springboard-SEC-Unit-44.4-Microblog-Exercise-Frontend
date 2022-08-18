@@ -1,13 +1,41 @@
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { updateVoteToAPI } from "../store/titlesSlice";
 
-const Title = ({ id, title, description }) => {
+const Title = ({ id, title, description, votes }) => {
+	const dispatch = useDispatch();
+
+	const handleVote = (direction) => {
+		dispatch(updateVoteToAPI({ postId: id, direction }));
+	};
 	return (
 		<div className="column is-half">
-			<div className="box">
-				<h4 className="title is-4">
-					<Link to={`/${id}`}>{title}</Link>
-				</h4>
-				<p className="is-italic">{description}</p>
+			<div className="card">
+				<div className="card-content">
+					<h4 className="title is-4">
+						<Link to={`/${id}`}>{title}</Link>
+					</h4>
+					<p className="subtitle">{description}</p>
+				</div>
+				<footer className="card-footer">
+					<div className="card-footer-item">
+						<button
+							className="button is-ghost"
+							onClick={() => handleVote("up")}
+						>
+							<i className="fa-solid fa-chevron-up fa-lg"></i>
+						</button>
+					</div>
+					<span className="card-footer-item">{votes}</span>
+					<div className="card-footer-item">
+						<button
+							className="button is-ghost"
+							onClick={() => handleVote("down")}
+						>
+							<i className="fa-solid fa-chevron-down fa-lg"></i>
+						</button>
+					</div>
+				</footer>
 			</div>
 		</div>
 	);
