@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import useUpdateVote from "../hooks/useUpdateVote";
 
 const Title = ({ postId, title, description, votes }) => {
-	const handleVote = useUpdateVote(postId);
+	const handleVote = useUpdateVote(postId, false);
 	return (
 		<div className="column is-half">
 			<div className="card">

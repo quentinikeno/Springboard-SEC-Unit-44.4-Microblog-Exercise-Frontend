@@ -98,8 +98,8 @@ export const deleteCommentFromAPI = createAsyncThunk(
 	}
 );
 
-export const updateVoteToAPI = createAsyncThunk(
-	"posts/updateVoteToAPI",
+export const updateVoteToAPIPost = createAsyncThunk(
+	"posts/updateVoteToAPIPost",
 	async ({ postId, direction }, { rejectWithValue }) => {
 		try {
 			const response = await axios.post(
@@ -214,14 +214,14 @@ const extraReducers = (builder) => {
 		.addCase(deleteCommentFromAPI.rejected, (state) => {
 			state.isLoading = false;
 		})
-		.addCase(updateVoteToAPI.pending, (state) => {
+		.addCase(updateVoteToAPIPost.pending, (state) => {
 			state.isLoading = true;
 		})
-		.addCase(updateVoteToAPI.fulfilled, (state, action) => {
+		.addCase(updateVoteToAPIPost.fulfilled, (state, action) => {
 			reducers.updateVotes(state, action);
 			state.isLoading = false;
 		})
-		.addCase(updateVoteToAPI.rejected, (state) => {
+		.addCase(updateVoteToAPIPost.rejected, (state) => {
 			state.isLoading = false;
 		});
 };

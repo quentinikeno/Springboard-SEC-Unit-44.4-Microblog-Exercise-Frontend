@@ -22,8 +22,8 @@ export const getTitles = createAsyncThunk("titles/getTitles", async () => {
 	}
 });
 
-export const updateVoteToAPI = createAsyncThunk(
-	"titles/updateVoteToAPI",
+export const updateVoteToAPITitle = createAsyncThunk(
+	"titles/updateVoteToAPITitle",
 	async ({ postId, direction }, { rejectWithValue }) => {
 		try {
 			const response = await axios.post(
@@ -55,14 +55,14 @@ const extraReducers = (builder) => {
 		.addCase(getTitles.rejected, (state, action) => {
 			state.isLoading = false;
 		})
-		.addCase(updateVoteToAPI.pending, (state) => {
+		.addCase(updateVoteToAPITitle.pending, (state) => {
 			state.isLoading = true;
 		})
-		.addCase(updateVoteToAPI.fulfilled, (state, action) => {
+		.addCase(updateVoteToAPITitle.fulfilled, (state, action) => {
 			state.isLoading = false;
 			reducers.updateVotes(state, action);
 		})
-		.addCase(updateVoteToAPI.rejected, (state, action) => {
+		.addCase(updateVoteToAPITitle.rejected, (state, action) => {
 			state.isLoading = false;
 		});
 };
