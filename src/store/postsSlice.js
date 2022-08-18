@@ -100,8 +100,15 @@ export const deleteCommentFromAPI = createAsyncThunk(
 
 const reducers = {
 	addPost: (state, action) => {
-		const { id, title, description, body, comments = [] } = action.payload;
-		state.posts[id] = { title, description, body, comments };
+		const {
+			id,
+			title,
+			description,
+			body,
+			comments = [],
+			votes,
+		} = action.payload;
+		state.posts[id] = { title, description, body, comments, votes };
 	},
 
 	editPost: (state, action) => {
