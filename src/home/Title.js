@@ -1,13 +1,8 @@
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { updateVoteToAPI } from "../store/titlesSlice";
+import useUpdateVote from "../hooks/useUpdateVote";
 
 const Title = ({ id, title, description, votes }) => {
-	const dispatch = useDispatch();
-
-	const handleVote = (direction) => {
-		dispatch(updateVoteToAPI({ postId: id, direction }));
-	};
+	const handleVote = useUpdateVote(id);
 	return (
 		<div className="column is-half">
 			<div className="card">
