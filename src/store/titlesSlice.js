@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const apiPostURL = "http://localhost:5000/api/posts";
+const apiPostURL =
+	process.env.REACT_APP_API_URL || "http://localhost:5000/api/posts";
 
 const initialState = {
 	titles: {},
